@@ -1,41 +1,43 @@
 import random
 
-# Метод 1: Використання zip()
-def solution_with_zip(N):
-    locks = list(range(N))
-    keys = locks.copy()
-    random.shuffle(keys)
-    
-    for lock, key in zip(locks, keys):
-        print(f"Lock {lock} is paired with Key {key}")
-
-# Метод 2: Використання random.sample()
+# Метод 1: Використання random.sample()
 def solution_with_sample(N):
-    locks = list(range(N))
-    keys = random.sample(locks, len(locks))
-    
-    for lock, key in zip(locks, keys):
-        print(f"Lock {lock} is paired with Key {key}")
-
-# Метод 3: Використання ітератора для ключів
-def solution_with_iterator(N):
-    locks = list(range(N))
-    keys = locks.copy()
+    keys = list(range(N))
+    locks = [0] * N  # Замок з одним замком
     random.shuffle(keys)
     
-    key_iter = iter(keys)
     for lock in locks:
-        key = next(key_iter)
+        key = keys.pop()
         print(f"Lock {lock} is paired with Key {key}")
+
+# Метод 2: Використання циклу з вибором випадкового ключа
+def solution_with_random_choice(N):
+    keys = list(range(N))
+    locks = [0] * N  # Замок з одним замком
+    
+    for lock in locks:
+        key = random.choice(keys)
+        keys.remove(key)
+        print(f"Lock {lock} is paired with Key {key}")
+
+# Метод 3: Використання рандомного перемішування ключів
+def solution_with_shuffle(N):
+    keys = list(range(N))
+    locks = [0] * N  # Замок з одним замком
+    random.shuffle(keys)
+    
+    for lock, key in enumerate(keys):
+        print(f"Lock {locks[lock]} is paired with Key {key}")
 
 # Приклад виклику кожного з методів
 if __name__ == "__main__":
-    N = 10
-    print("Solution with zip:")
-    solution_with_zip(N)
-    
-    print("\nSolution with random.sample():")
+    N = 10  # Кількість ключів
+    print("Solution with random.sample():")
     solution_with_sample(N)
     
-    print("\nSolution with iterator:")
-    solution_with_iterator(N)
+    print("\nSolution with random.choice():")
+    solution_with_random_choice(N)
+    
+    print("\nSolution with shuffle:")
+    solution_with_shuffle(N)
+
